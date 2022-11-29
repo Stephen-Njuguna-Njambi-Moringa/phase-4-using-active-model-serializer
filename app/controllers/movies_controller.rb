@@ -7,8 +7,12 @@ class MoviesController < ApplicationController
   end
 
   def show
-    movie = Movie.find(params[:id])
-    render json: movie
+    post = Post.find(params[:id])
+    render json: post.to_json(only: [:title, :description, :id], include: [author: { only: [:name]}])
+  end
+
+  def summary
+    "#{self.object.title} - #{self.object.description[0..49]}..."
   end
 
   private
